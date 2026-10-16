@@ -1,7 +1,7 @@
 import './style.css'
 // ===== Modelo (espejo de data/Model.kt y data/Game.kt) =====
 const SIZES = { SMALL:{label:'Chico',points:5,emoji:'🌱'}, MEDIUM:{label:'Mediano',points:10,emoji:'🌿'}, LARGE:{label:'Grande',points:20,emoji:'🌳'}, EPIC:{label:'Épico',points:50,emoji:'🐉'} }
-const SIZE_COLORS = { SMALL:'#26C6DA', MEDIUM:'#7C4DFF', LARGE:'#FF9100', EPIC:'#E040FB' }
+const SIZE_COLORS = { SMALL:'#222225', MEDIUM:'#2C2C30', LARGE:'#3A3A3F', EPIC:'#4A4A50' }
 const FREQ = { DAILY:'Diario', WEEKLY:'Semanal' }
 const TYPES = { MANUAL:'Manual', STEPS:'Pasos (simulado)', SCREEN_TIME:'Tiempo de pantalla (simulado)' }
 const APPS = ['Instagram','TikTok','YouTube','X','WhatsApp','Netflix']
@@ -136,7 +136,7 @@ const A = {
 }
 
 function toast(msg){ const t = document.createElement('div'); t.textContent = msg
-  Object.assign(t.style,{position:'absolute',left:'50%',bottom:'170px',transform:'translateX(-50%)',background:'#323232',color:'#fff',padding:'10px 16px',borderRadius:'8px',zIndex:60,fontSize:'14px'})
+  Object.assign(t.style,{position:'absolute',left:'50%',bottom:'170px',transform:'translateX(-50%)',background:'#222225',color:'#F2F2F2',border:'1px solid #2C2C30',padding:'10px 16px',borderRadius:'8px',zIndex:60,fontSize:'14px'})
   document.getElementById('phone').appendChild(t); setTimeout(()=>t.remove(),2000) }
 
 // ===== Render =====
@@ -198,9 +198,9 @@ function goalsScreen() {
 
 function profileScreen() {
   const done = db.completions.filter(c=>c.status==='DONE').length, missed = db.completions.filter(c=>c.status==='MISSED').length
-  const stat = (e,v,l,c) => `<div class="stat" style="background:${c}"><b>${e} ${v}</b>${l}</div>`
-  return `<div class="stats">${stat('⭐',xp(),'XP total','#7C4DFF')}${stat('🔥',Game.globalStreak(db.completions),'Racha','#FF6D00')}
-  ${stat('✅',done,'Cumplidos','#00C853')}${stat('❌',missed,'Fallados','#FF1744')}</div>
+  const stat = (e,v,l,c) => `<div class="stat ${c}"><b>${e} ${v}</b>${l}</div>`
+  return `<div class="stats">${stat('⭐',xp(),'XP total','pos')}${stat('🔥',Game.globalStreak(db.completions),'Racha','')}
+  ${stat('✅',done,'Cumplidos','pos')}${stat('❌',missed,'Fallados','neg')}</div>
   <div class="sec">INTEGRACIONES</div>
   <div class="card"><div class="int">👣 Health Connect (pasos) <span class="tag">DEMO</span><span class="dot" style="background:var(--done)"></span></div>
   <div class="small">En la web los pasos son simulados: movés el slider en el hábito o tocás "Sincronizar ahora" para generar datos falsos. En Android se leen de Health Connect.</div></div>
@@ -273,7 +273,7 @@ app.addEventListener('change', e => { const t = e.target
 
 // ===== Confetti (espejo de Effects.kt) =====
 const cv = document.getElementById('confetti'), cx = cv.getContext('2d')
-const COLORS = ['#FF4081','#00E676','#2979FF','#FFD600','#AA00FF','#FF6D00']
+const COLORS = ['#3FC47E','#3FC47E','#F2F2F2','#F2F2F2','#8A8A8F','#5A5A5F']
 function confetti() {
   const W = cv.width = cv.offsetWidth * devicePixelRatio, H = cv.height = cv.offsetHeight * devicePixelRatio
   const ps = Array.from({length:120}, () => ({ x:Math.random(), vx:Math.random()*.6-.3, vy:Math.random()*.8+.4, c:COLORS[Math.random()*6|0], r:Math.random()*720, s:(Math.random()*14+8)*devicePixelRatio }))
